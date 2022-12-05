@@ -1,21 +1,80 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Checker Password</title>
-    <link rel="stylesheet" type="text/css" href="./style.css">
-</head>
-<body>
+    <link rel="stylesheet" type="text/css" href="./style.css" />
+  </head>
+  <body>
     <div class="container">
-        <h2>Passworld Strength Check</h2>
-        <div class="inputBox">
-            <input type="password" placeholder="password"
-             id="myPassword">
-             <div class="show"></div>
-        </div>
-        <div class="strengthMeter"></div>
+      <h2>Passworld Strength Check</h2>
+      <div class="inputBox">
+        <input type="password" placeholder="password" id="myPassword" />
+        <div class="show"></div>
+      </div>
+      <div class="strengthMeter"></div>
     </div>
-</body>
+
+    <script>
+      function Strength(password) {
+        let i = 0;
+
+        if (password.length > 6) {
+          i++;
+        }
+        if (password.length >= 10) {
+          i++;
+        }
+        if (/[A-Z]/.test(password)) {
+          i++;
+        }
+        if (/[0-9]/.test(password)) {
+          i++;
+        }
+        if (/[A-Za-z0-8]/.test(password)) {
+          i++;
+        }
+        return i;
+      }
+
+      let container = document.querySelector('.container');
+      document.addEventListener('keyup', () => {
+        let valuePswrd = document.querySelector('#myPassword').value;
+
+        let strength = Strength(valuePswrd);
+
+        if (strength <= 2) {
+            console.log('2222222');
+          container.classList.add('weak');
+          container.classList.remove('medium');
+          container.classList.remove('strong');
+        } else if (strength >= 2 && strength <= 4) {
+            console.log('2222222 y 444');
+
+          container.classList.remove('weak');
+          container.classList.add('medium');
+          container.classList.remove('strong');
+        } else {
+          container.classList.remove('weak');
+          container.classList.remove('medium');
+          container.classList.add('strong');
+        }
+      });
+
+      let buttonPaswrd = document.querySelector('#myPassword');
+      let show = document.querySelector('.show');
+
+      show.onclick = () => {
+        if (buttonPaswrd.type === 'password') {
+          buttonPaswrd.setAttribute('type', 'text');
+          show.classList.add('hide');
+        } else {
+          buttonPaswrd.setAttribute('type', 'password');
+          show.classList.remove('hide');
+        }
+      };
+    </script>
+  </body>
 </html>
